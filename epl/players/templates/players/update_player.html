@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-3">
+  <div class="container mt-3 mb-3">
     <h2>{{title}}</h2>
     <hr>
     <form method="post">
@@ -37,7 +37,7 @@
       </div>
       <div class="mb-3">
         <label for="goals" class="form-label">Goals</label>
-        <input value="{{player.goals}}" name="goals" type="number" class="form-control" id="goals" required>
+        <input value="{{player.goal}}" name="goals" type="number" class="form-control" id="goals" required>
       </div>
       <div class="mb-3">
         <label for="squad_no" class="form-label">Squad No</label>
