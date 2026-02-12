@@ -15,26 +15,60 @@
       </div>
       <div class="mb-3">
         <label for="position" class="form-label">Select Position</label>
-        <select name="position" class="form-select" aria-label="Default select example">
+        <select name="position" class="form-select" id="positionSelect">
           <option value="Goalkeeper">Goalkeeper</option>
           <option value="Defender">Defender</option>
           <option value="Midfielder">Midfielder</option>
-          <option value="Forward">Forward</option>
+          <option value="Forward" selected>Forward</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="nationality" class="form-label">Nationality</label>
         <input name="nationality" type="text" class="form-control" id="nationality" required>
       </div>
-      <div class="mb-3">
+      <div class="mb-3" id="goals_div">
         <label for="goals" class="form-label">Goals</label>
         <input name="goals" type="number" class="form-control" id="goals" required>
       </div>
+
+      <div class="mb-3" id="clean_sheets_div" style="display:none;">
+        <label for="clean_sheets" class="form-label">Clean Sheets</label>
+        <input name="clean_sheets" type="number" class="form-control" id="clean_sheets">
+      </div>
+
+      <script>
+        const positionSelect = document.getElementById('positionSelect');
+        const goalsDiv = document.getElementById('goals_div');
+        const goalsInput = document.getElementById('goals');
+        const cleanSheetsDiv = document.getElementById('clean_sheets_div');
+        const cleanSheetsInput = document.getElementById('clean_sheets');
+
+        function toggleFields() {
+          if (positionSelect.value === 'Goalkeeper') {
+            goalsDiv.style.display = 'none';
+            goalsInput.required = false; 
+            goalsInput.value = 0;
+
+            cleanSheetsDiv.style.display = 'block';
+            cleanSheetsInput.required = true;
+          } else {
+            goalsDiv.style.display = 'block';
+            goalsInput.required = true;
+
+            cleanSheetsDiv.style.display = 'none';
+            cleanSheetsInput.required = false;
+            cleanSheetsInput.value = '';
+          }
+        }
+
+        positionSelect.addEventListener('change', toggleFields);
+        toggleFields();
+      </script>
+
       <div class="mb-3">
         <label for="squad_no" class="form-label">Squad Number</label>
         <input name="squad_no" type="number" class="form-control" id="squad_no" required>
       </div>
-      
       <div class="mb-3">
         <label for="img" class="form-label">Image URL</label>
         <input name="img" type="text" class="form-control" id="img" required>

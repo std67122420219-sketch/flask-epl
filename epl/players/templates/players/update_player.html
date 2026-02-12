@@ -11,11 +11,11 @@
     <form method="post">
       <div class="mb-3">
         <label for="name" class="form-label">Player Name</label>
-        <input value="{{player.name}}" name="name" readonly type="text" class="form-control" id="name" required>
+        <input value="{{player.name}}" name="name"  type="text" class="form-control" id="name" required>
       </div>
       <div class="mb-3">
         <label for="position" class="form-label">Select Position</label>
-        <select name="position" class="form-select" aria-readonly="true">
+        <select name="position" class="form-select" id="positionSelect">
           <option value="Goalkeeper" {% if player.position == 'Goalkeeper' %}
             selected
           {% endif %}
@@ -33,12 +33,49 @@
       </div>
       <div class="mb-3">
         <label for="nationality" class="form-label">Nationality</label>
-        <input value="{{player.nationality}}" readonly name="nationality" type="text" class="form-control" id="nationality" required>
+        <input value="{{player.nationality}}" name="nationality" type="text" class="form-control" id="nationality" required>
       </div>
-      <div class="mb-3">
+      <div class="mb-3" id="goals_div">
         <label for="goals" class="form-label">Goals</label>
         <input value="{{player.goal}}" name="goals" type="number" class="form-control" id="goals" required>
       </div>
+
+      <div class="mb-3" id="clean_sheets_div" style="display: none;">
+        <label for="clean_sheets" class="form-label">Clean Sheets</label>
+        <input value="{{ player.clean_sheets if player.clean_sheets is not none else '' }}" 
+               name="clean_sheets" type="number" class="form-control" id="clean_sheets">
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const positionSelect = document.getElementById('positionSelect');
+            const goalsDiv = document.getElementById('goals_div');
+            const goalsInput = document.getElementById('goals');
+            const cleanSheetsDiv = document.getElementById('clean_sheets_div');
+            const cleanSheetsInput = document.getElementById('clean_sheets');
+            
+            function toggleFields() {
+                if (positionSelect.value === 'Goalkeeper') {
+                    cleanSheetsDiv.style.display = 'block';
+                    cleanSheetsInput.required = true;
+
+                    goalsDiv.style.display = 'none';
+                    goalsInput.required = false;
+                } else {
+                    cleanSheetsDiv.style.display = 'none';
+                    cleanSheetsInput.required = false;
+
+                    goalsDiv.style.display = 'block';
+                    goalsInput.required = true;
+                }
+            }
+
+            toggleFields();
+
+            positionSelect.addEventListener('change', toggleFields);
+        });
+      </script>
+      
       <div class="mb-3">
         <label for="squad_no" class="form-label">Squad No</label>
         <input value="{{player.squad_no}}" name="squad_no" type="number" class="form-control" id="squad_no" required>
@@ -61,7 +98,7 @@
       </div>
       <button type="submit" class="btn btn-outline-success">
         <i class="bi bi-pencil-square"></i>
-        Update Club
+        Update Player
       </button>
     </form>
   </div>
